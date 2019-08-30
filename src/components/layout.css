@@ -6,6 +6,8 @@
 body {
   min-height: 100vh;
   display: flex;
+  margin: 0;
+  padding: 0;
   background-color: #eaeaea;
   font-family: Open Sans;
   font-weight: 300;
