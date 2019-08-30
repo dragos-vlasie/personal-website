@@ -1,7 +1,7 @@
 import React from "react"
 import { Link } from "gatsby"
-import { FaBeer } from 'react-icons/fa';
-import { FaBehance } from "react-icons/fa";
+import { FaFileAlt } from "react-icons/fa";
+import { FaArrowAltCircleLeft } from "react-icons/fa";
 import { FaLinkedin } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
@@ -13,53 +13,73 @@ import SEO from "../components/seo"
 const IndexPage = () => {
 
 	const handleClick = (e) => {
-		console.log('e:', e)
+		e.stopPropagation()
+		console.log('e:', e.currentTarget)
 		var cardToggle = document.querySelectorAll(".card-toggle")
-		var cards = document.querySelector(".cards")
-		var icons = document.querySelectorAll(".icon-font")
-		var cards = document.querySelector(".cards")
-		var card = document.querySelector(".card")
-		var cardContent = document.querySelector(".card-content")
-		var inputTextarea = document.querySelector("input,textarea")
-		var contact = document.querySelector("contact")
+		var cards = document.querySelectorAll(".card")
+		var cardContent = document.querySelectorAll(".card-content")
 		
-			console.log('e:', e.target.parentNode.parentNode)
-			var clickedAnchor = e.target.parentNode.parentNode.parentNode.parentNode.
-			var clickedCard = e.target.parentNode.parentNode.parentNode.parentNode.parentNode
-
-			cardToggle.forEach(card => {
-				card.classList.remove('active')
-				card.parentNode.classList.remove('active')
-			})
-			clickedAnchor.children 
-			var arrayLength = clickedAnchor.children .length;
-for (var i = 0; i < arrayLength; i++) {
-    clickedAnchor.children [i].classList.add('anusdecal')
-    //Do something
-}
-			// clickedCard.classList.add('active')
-		// function removeClass(isAnimating, element){
-		// 	if (isAnimating) {
-		// 		isAnimating = true;
-		// 		cardToggle.forEach(card => {
-		// 			card.querySelector(".card-content").style.zIndex = "0";
-		// 			card.parentNode.classList.remove('active');
-		// 		})
-		// 		element.parentNode.style.zIndex = "1";
-		// 		setTimeout(function(){
-		// 			element.parentNode.classList.toggle("active").querySelector(".card-content").addEventListener("transitionend", function(){
-		// 				isAnimating = false;
-		// 			});
-		// 		},10);
-		// 	}
-		// }
-  	}
-
-	return (
-<Layout>
-    <div class="cards">
+		var clickedAnchor = e.currentTarget;
+		var clickedCard = e.currentTarget.parentNode;
+		
+		
+		cardToggle.forEach(card => {
+			card.classList.remove('active')
+			card.parentNode.classList.remove('active')
+		})
+		
+		clickedAnchor.classList.add('active');
+		clickedCard.classList.add('active');
+		var isAnimating = false
+		handleAnimation(isAnimating);
+		
+		
+		function handleAnimation(isAnimating) {
+			if (!isAnimating) {
+				isAnimating = true;
+				cardContent.forEach(card => {
+					if ( card !== clickedAnchor ) {
+						card.classList.remove('active')
+						card.style.zIndex = "0";
+					}
+				})
+				
+				clickedCard.querySelector('.card-content').style.zIndex = "1";
+				
+				
+				var arry = []
+				cards.forEach(card => {
+					arry.push(card)
+				})
+				
+				cardContent.forEach(element => {
+					console.log('element:', element)
+					if (element.classList.contains('active')) {
+						console.log('elemendasdast:', element)
+						element.style.zIndex = "2"
+					}
+				});
+				
+				setTimeout(function(){
+					clickedCard.classList.add("active")
+					clickedCard.querySelector(".card-content").addEventListener("transitionend", function(){
+						isAnimating = false;
+					});
+				},10);
+			}
+		}
+	}
 	
-	<div class="contact">Contact Me</div>
+	const onContactClick = () => {
+		var contactForm = document.querySelector(".contact-form");
+		var inputTextarea = document.querySelector("input,textarea")
+		contactForm.classList.toggle('active');
+	}
+	
+	return (
+		<Layout>
+    <div class="cards">
+	<div class="contact" onClick={onContactClick}>Contact Me</div>
 	<div class="contact-form">
 		<a href="#" class="close"><i class="fa fa-times"></i></a>
 		<form>
@@ -72,7 +92,7 @@ for (var i = 0; i < arrayLength; i++) {
 	</div>
 	
 	 <div class="card active" id="overview">
-		<a class="card-toggle" onClick={handleClick}><i class="fa fa-arrow-circle-left"></i></a>
+		<a class="card-toggle" onClick={handleClick}><span class="icon-font"><FaArrowAltCircleLeft/></span></a>
 		<div class="card-content">
 			<div class="row">
 				<div class="left col">
@@ -104,11 +124,11 @@ for (var i = 0; i < arrayLength; i++) {
 	</div> 
 	
 	<div class="card" id="behance">
-		<a class="card-toggle" onClick={handleClick}><span class="icon-font"><FaBehance/></span></a>
+		<a class="card-toggle" onClick={handleClick}><span class="icon-font"><FaFileAlt/></span></a>
 		<div class="card-content">
 			<div class="row">
 				<div class="left col">
-					<h2>My <strong>Behance</strong></h2>
+					<h2>My <strong>experience</strong></h2>
 					<p>Quia fugit animi, iure error veritatis? Ipsa quis, deserunt illum culpa ab id mollitia nesciunt commodi aut dolores vero ipsam ut minima neque nam excepturi corporis obcaecati consequuntur accusantium laborum!</p>
 				</div>
 				<div class="right col"><img src="https://dl.dropboxusercontent.com/u/26808427/cdn/preview.jpg" alt="" /></div>
@@ -133,7 +153,7 @@ for (var i = 0; i < arrayLength; i++) {
 		<div class="card-content">
 			<div class="row">
 				<div class="left col">
-					<h2>My <strong>Twitter</strong></h2>
+					<h2>My <strong>Instagram</strong></h2>
 				
 					<p>Fugit veniam, animi architecto doloribus veritatis vitae sint doloremque possimus quae. Pariatur libero, veniam voluptatibus alias distinctio qui nostrum debitis voluptate amet hic repellat officiis nam quos vel doloremque praesentium.</p>
 				</div>
